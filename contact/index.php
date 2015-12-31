@@ -1,4 +1,6 @@
 <?php
+
+require_once("../include/config.php");
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$name = trim($_POST["name"]);
 	$email = trim($_POST["email"]);
@@ -20,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$error_message = "Your form submission has an error.";
 	}
 
-	require_once("include/phpmailer/class.phpmailer.php");
+	require_once(ROOTPATH."include/phpmailer/class.phpmailer.php");
 	$mail = new PHPMailer();
 	if (!isset($error_message)){
 		if(!$mail ->ValidateAddress($email)){
@@ -53,7 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	}
 	if(!isset($error_message)){
 		if($mail->Send()){
-			header("Location: contact.php?status=thanks");
+			header("Location: ".BASE_URL."contact/?status=thanks");
 			exit;
 		} else {
 			$error_message = "There was a problem sending the email: " . $mail->ErrorInfo;
@@ -69,7 +71,7 @@ $pageTitle ="Contact Mike";
 $section = "contact";
 ?>
 
-<?php include('include/header.php');?>
+<?php include(ROOT_PATH.'include/header.php');?>
 
 <div class="section page">
 	<div class="wrapper">
@@ -86,7 +88,7 @@ $section = "contact";
 			echo '<p class ="message">'.$error_message.'</p>';
 		}
 		?>
-		<form method="post" action="contact.php">
+		<form method="post" action=BASE_PATH."contact.php">
 			<table>
 				<tr>
 					<th>
@@ -130,4 +132,4 @@ $section = "contact";
 	</div>
 </div>
 
-<?php include('include/footer.php');?>
+<?php include(ROOT_PATH.'include/footer.php');?>
