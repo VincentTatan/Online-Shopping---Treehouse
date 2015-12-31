@@ -5,38 +5,61 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	$message = trim($_POST["message"]);
 	
 	if($name == "" OR $email == "" OR $message == ""){
-		echo "You must specify a value for name, email address, and message.";
-		exit;
+		$error_message = "You must specify a value for name, email address, and message.";
 	}
-	foreach($_POST as $value){
-		if(stripos($value,'Content-Type:') !== FALSE){
-			echo "There was a problem with the information you entered";
-			exit;
+
+	if(!isset($error_message)){
+		foreach($_POST as $value){
+			if(stripos($value,'Content-Type:') !== FALSE){
+				$error_message ="There was a problem with the information you entered";
+			}
 		}
 	}
 
-	if ($_POST["address"]!= ""){
-		echo "Your form submission has an error.";
-		exit;
+	if (!isset($error_message) AND $_POST["address"]!= ""){
+		$error_message = "Your form submission has an error.";
 	}
 
 	require_once("include/phpmailer/class.phpmailer.php");
 	$mail = new PHPMailer();
-	if(!$mail ->ValidateAddress($email)){
-		echo "You must specify a valid email address";
-		exit;
+	if (!isset($error_message)){
+		if(!$mail ->ValidateAddress($email)){
+			$error_message = "You must specify a valid email address";
+		}
 	}
 
-	$email_body = "";
-	$email_body = $email_body."Name: ". $name."\n";
-	$email_body = $email_body."Email: ".$email."\n";
-	$email_body = $email_body."message: ".$message;
+	if(!isset ($error_message)){
 
+		$email_body = "";
+		$email_body = $email_body."Name: ". $name."\n";
+		$email_body = $email_body."Email: ".$email."\n";
+		$email_body = $email_body."message: ".$message;
 
-	//ToDO: Send email
+		$mail->SetFrom($email,$name);
 
-	header("Location: contact.php?status=thanks");
-	exit;
+	// $mail->AddReplyTo($email,$name);
+		$address = "vincentt.2013@sis.smu.edu.sg";
+		$mail->AddAddress($address, "Vincent Tatan");
+
+		$mail->Subject    = "Shirts 4 Mike Contact Form Submission | ". $name;
+
+	// $mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
+
+		$mail->MsgHTML($email_body);
+
+	// $mail->AddAttachment("images/phpmailer.gif");      // attachment
+	// $mail->AddAttachment("images/phpmailer_mini.gif"); // attachment
+
+	}
+	if(!isset($error_message)){
+		if($mail->Send()){
+			header("Location: contact.php?status=thanks");
+			exit;
+		} else {
+			$error_message = "There was a problem sending the email: " . $mail->ErrorInfo;
+		}
+	}
+
 }
 ?>
 
@@ -55,7 +78,14 @@ $section = "contact";
 		<p>Thank you for the email! I&rsquo;ll be in touch with you soon</p>
 		<?php } else { ?>
 
-		<p>I&rsquo;d love to hear from you! Complete the form to send me an email.</p>
+		<?php
+
+		if (!isset($error_message)){
+			echo '<p>I&rsquo;d love to hear from you! Complete the form to send me an email.</p>';
+		} else {
+			echo '<p class ="message">'.$error_message.'</p>';
+		}
+		?>
 		<form method="post" action="contact.php">
 			<table>
 				<tr>
@@ -64,7 +94,7 @@ $section = "contact";
 					</th>
 					<td>
 
-						<input type="text" name="name" id="name">
+						<input type="text" name="name" id="name" value="<?php if (isset($name)){echo htmlspecialchars($name);}?>">
 					</td>
 				</tr>
 				<tr>
@@ -73,7 +103,7 @@ $section = "contact";
 					</th>
 					<td>
 
-						<input type="text" name="email" id="email">
+						<input type="text" name="email" id="email" value="<?php if (isset($email)){echo htmlspecialchars($email);}?>">
 					</td>
 				</tr>
 				<tr>
@@ -81,7 +111,7 @@ $section = "contact";
 						<label for ="message">Message</label>
 					</th>
 					<td>
-						<textarea name="message" id="message"></textarea>
+						<textarea name="message" id="message"><?php if (isset($message)){echo htmlspecialchars($message);}?></textarea>
 					</td>
 				</tr>
 				<tr style="display:none;">
