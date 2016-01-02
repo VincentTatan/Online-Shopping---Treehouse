@@ -1,6 +1,6 @@
 <?php 
-include ('../include/config.php');
-include(ROOT_PATH.'include/products.php');
+require_once('../include/config.php');
+require_once(ROOT_PATH.'include/products.php');
 
 if(isset($_GET["id"])){
 	$product_id = $_GET["id"];
@@ -10,7 +10,7 @@ if(isset($_GET["id"])){
 }
 
 if (!isset($product)){
-	header("Location:".ROOT_PATH."shirts");
+	header("Location:".BASE_URL."shirts");
 	exit();
 } 
 $section = "shirts";
