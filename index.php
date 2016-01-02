@@ -5,7 +5,10 @@ $section = "index";
 
 <?php 
 include ('./include/config.php');
-include(ROOT_PATH.'include/header.php');?>
+include(ROOT_PATH.'include/header.php');
+include(ROOT_PATH."include/products.php");
+$recent = get_products_recent();
+?>
 
 		<div class="section banner">
 
@@ -28,20 +31,13 @@ include(ROOT_PATH.'include/header.php');?>
 
 				<h2>Mike&rsquo;s Latest Shirts</h2>
 
-				<?php include(ROOT_PATH."include/products.php");?>
 				<ul class="products">
 					<?php 
-					$total_products = count($products);
-					$position = 0;
-					$list_view_html = "";
-					foreach($products as $product_id => $product){
-						$position = $position +1;
-						if($total_products - $position < 4 ){
-							$list_view_html =  get_list_view_html($product_id,$product). $list_view_html;
-
-						}					
-					} 
-					echo $list_view_html;
+						$list_view_html = "";
+						foreach($recent as $product){
+							$list_view_html = get_list_view_html($product). $list_view_html;
+						}
+						echo $list_view_html;
 					?>
 				</ul>
 

@@ -63,15 +63,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	}
 
 }
-?>
 
-
-<?php
 $pageTitle ="Contact Mike";
 $section = "contact";
-?>
 
-<?php include(ROOT_PATH.'include/header.php');?>
+include(ROOT_PATH.'include/header.php');
+?>
 
 <div class="section page">
 	<div class="wrapper">

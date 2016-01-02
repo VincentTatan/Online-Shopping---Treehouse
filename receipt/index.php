@@ -1,7 +1,5 @@
 <?php
-
 require_once("../include/config.php");
-
 $pageTitle = "Thank you for your order";
 $section = "none";
 include(ROOT_PATH."include/header.php");
