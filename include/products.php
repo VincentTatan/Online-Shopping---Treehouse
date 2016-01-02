@@ -3,7 +3,11 @@ include('config.php');
 function get_list_view_html ($product_id, $product){
 	$output = "";
 	$output = $output. "<li>" ;
+<<<<<<< HEAD
 	$output = $output. '<a href="'.BASE_URL.'shirts/'.$product_id.'/">';
+=======
+	$output = $output. '<a href="'.BASE_URL.'shirt?id='.$product_id.'">';
+>>>>>>> 6e6545e04795d6719b63c8b693a8f9c9fd59b389
 	$output = $output. '<img src="'.BASE_URL.$product["img"].'" "'.'alt="'.$product["name"].'">';
 	$output = $output. '<p>View Details</p>';
 	$output = $output. "</a>";
