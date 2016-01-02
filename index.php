@@ -3,7 +3,9 @@ $pageTitle ="Shirt 4 Mike";
 $section = "index";
 ?>
 
-<?php include('include/header.php');?>
+<?php 
+include ('./include/config.php');
+include(ROOT_PATH.'include/header.php');?>
 
 		<div class="section banner">
 
@@ -11,7 +13,7 @@ $section = "index";
 
 				<img class="hero" src="img/mike-the-frog.png" alt="Mike the Frog says:">
 				<div class="button">
-					<a href="shirts.php">
+					<a href="<?php echo BASE_URL?>shirts">
 						<h2>Hey, I&rsquo;m Mike!</h2>
 						<p>Check Out My Shirts</p>
 					</a>
@@ -26,7 +28,7 @@ $section = "index";
 
 				<h2>Mike&rsquo;s Latest Shirts</h2>
 
-				<?php include("include/products.php");?>
+				<?php include(ROOT_PATH."include/products.php");?>
 				<ul class="products">
 					<?php 
 					$total_products = count($products);
@@ -49,4 +51,4 @@ $section = "index";
 
 	</div>
 
-<?php include('include/footer.php');?>
+<?php include(ROOT_PATH.'include/footer.php');?>

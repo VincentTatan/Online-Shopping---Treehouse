@@ -1,30 +1,31 @@
-<?php include('include/products.php');
+<?php 
+include ('../include/config.php');
+include(ROOT_PATH.'include/products.php');
 
 if(isset($_GET["id"])){
 	$product_id = $_GET["id"];
 	if(isset($products[$product_id])){
 		$product = $products[$product_id];
-		echo "We have a valid shirt ID";
 	} 
 }
 
 if (!isset($product)){
-	header("Location:shirts.php");
+	header("Location:".ROOT_PATH."shirts");
 	exit();
 } 
 $section = "shirts";
 $pageTitle = $product["name"];
-include("include/header.php");
+include(ROOT_PATH."include/header.php");
 
 ?>
 
 <div class="section page">
 	<div class="wrapper">
-		<div class="breadcrumb"><a href="shirts.php">Shirts</a> &gt; <?php echo $product["name"] ?></div>
+		<div class="breadcrumb"><a href="<?php echo BASE_URL?>shirts">Shirts</a> &gt; <?php echo $product["name"] ?></div>
 
 		<div class="shirt-picture">
 			<span>
-				<img src='<?php echo $product["img"];?>' alt='<?php echo $product["name"]; ?>'>
+				<img src='<?php echo BASE_URL.$product["img"];?>' alt='<?php echo $product["name"]; ?>'>
 			</span>
 		</div>
 
@@ -56,4 +57,4 @@ include("include/header.php");
 
 
 
-<?php include("include/footer.php");?>
+<?php include(ROOT_PATH."include/footer.php");?>
