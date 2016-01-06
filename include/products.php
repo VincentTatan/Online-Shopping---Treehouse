@@ -14,6 +14,18 @@ function get_products_count(){
 	$all = get_products_all();
 	return count($all);
 }
+function get_products_subset($start,$end){
+	$subset = array();
+	$all = get_products_all();
+	$position = 0;
+	foreach($all as $product){
+		$position +=1;
+		if($position >=$start && $position<=$end){
+			$subset[] = $product;
+		}
+	}
+	return $subset;
+}
 function get_products_recent(){
 	$recent = array();
 	$all = get_products_all();
