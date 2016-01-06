@@ -1,16 +1,13 @@
 <?php 
 require_once('../include/config.php');
 require_once(ROOT_PATH.'include/products.php');
-$products = get_products_all();
 
 if(isset($_GET["id"])){
-	$product_id = $_GET["id"];
-	if(isset($products[$product_id])){
-		$product = $products[$product_id];
-	} 
+	$product_id = intval($_GET["id"]);
+	$product = get_product_single($product_id);
 }
 
-if (!isset($product)){
+if (empty($product)){
 	header("Location:".BASE_URL."shirts");
 	exit();
 } 
