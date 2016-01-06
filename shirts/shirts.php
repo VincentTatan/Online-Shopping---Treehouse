@@ -1,7 +1,15 @@
 <?php 
-include ('../include/config.php');
-include(ROOT_PATH.'include/products.php');
+require_once ('../include/config.php');
+require_once(ROOT_PATH.'include/products.php');
+
+if (empty($_GET["pg"])){
+	$current_page= 1;
+} else{
+	$current_page = $_GET["pg"];
+}
 $products = get_products_all();
+
+
 $pageTitle ="Shirts Catalogue";
 $section = "shirts";
 include(ROOT_PATH.'include/header.php');
